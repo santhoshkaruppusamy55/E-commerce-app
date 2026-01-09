@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Product</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+    }
+
+    h2 {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 6px;
+      margin-top: 4px;
+    }
+
+    img {
+      margin-top: 10px;
+      max-width: 120px;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 8px 12px;
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 15px;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Edit Product</h2>
+
+    <form
+      action="/admin/products/<%= product.id %>/update"
+      method="POST"
+      enctype="multipart/form-data"
+    >
+
+      <label>Product Title</label>
+      <input
+        type="text"
+        name="title"
+        value="<%= product.title %>"
+        required
+      />
+
+      <label>Description</label>
+      <textarea name="description" rows="4"><%= product.description %></textarea>
+
+      <label>Price</label>
+      <input
+        type="number"
+        name="price"
+        step="0.01"
+        value="<%= product.price %>"
+        required
+      />
+
+      <label>Quantity Available</label>
+      <input
+        type="number"
+        name="qtyAvailable"
+        value="<%= product.qtyAvailable %>"
+        required
+      />
+
+      <label>Category</label>
+      <select name="categoryId" required>
+        <% categories.forEach(cat => { %>
+          <option
+            value="<%= cat.id %>"
+            <%= cat.id === product.categoryId ? "selected" : "" %>
+          >
+            <%= cat.name %>
+          </option>
+        <% }) %>
+      </select>
+
+      <label>Current Image</label>
+      <% if (product.ProductImages.length) { %>
+        <img src="<%= product.ProductImages[0].path %>" />
+      <% } %>
+
+      <label>Replace Image (if need)</label>
+      <input type="file" name="image" accept="image/*" />
+
+      <button type="submit">Update Product</button>
+    </form>
+
+    <a href="/admin/products">← Back to Products</a>
+  </div>
+
+</body>
+</html>

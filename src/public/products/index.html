@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Products</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="/css/products-index.css">
+</head>
+<body>
+
+<div class="top-bar">
+  <h1>Products</h1>
+  <div class="top-actions">
+    <a href="/v1/cart">Cart</a>
+    <a href="/v1/orders">My Orders</a>
+    <button id="logoutBtn">Logout</button>
+  </div>
+</div>
+
+<form id="filterForm">
+  <input type="text" name="q" placeholder="Search">
+
+  <select name="category" id="categorySelect"></select>
+
+  <input type="number" name="priceMin" placeholder="Min">
+  <input type="number" name="priceMax" placeholder="Max">
+
+  <select name="sort">
+    <option value="">Price</option>
+    <option value="price_asc">Low → High</option>
+    <option value="price_desc">High → Low</option>
+  </select>
+
+  <label>
+    <input type="checkbox" name="inStock" value="true"> In stock
+  </label>
+
+  <button type="submit">Apply</button>
+</form>
+
+<div class="grid" id="productGrid"></div>
+<div class="pagination" id="pagination"></div>
+
+
+<script type="module" src="/js/products-index.js"></script>
+</body>
+</html>

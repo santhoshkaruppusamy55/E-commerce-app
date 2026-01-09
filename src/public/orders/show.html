@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Order Details</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" href="/css/order-show.css" />
+</head>
+<body>
+
+<div class="container">
+  <h2 id="orderTitle">Order</h2>
+
+  <div class="meta" id="orderMeta"></div>
+
+  <h3>Shipping Details</h3>
+  <div id="shipping"></div>
+
+  <h3>Items</h3>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th class="right">Qty</th>
+        <th class="right">Unit Price</th>
+        <th class="right">Subtotal</th>
+      </tr>
+    </thead>
+    <tbody id="itemsBody"></tbody>
+    <tfoot>
+      <tr>
+        <td colspan="3" class="right total">Total</td>
+        <td class="right total" id="orderTotal"></td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <a href="/v1/orders">← Back to my orders</a>
+</div>
+
+<script type="module" src="/js/order-show.js"></script>
+</body>
+</html>

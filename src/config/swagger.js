@@ -1,0 +1,35 @@
+const swaggerJsdoc = require("swagger-jsdoc");
+
+const options = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Project API Documentation",
+      version: "1.0.0",
+      description: "Simple API documentation using Swagger"
+    },
+    servers: [
+      {
+        url: "http://localhost:3000",
+        description: "Local server"
+      }
+    ],
+    components: {
+      securitySchemes: {
+        cookieAuth: {
+          type: "apiKey",
+          in: "cookie",
+          name: "accessToken"
+        }
+      }
+    },
+    security: [
+      {
+        cookieAuth: []
+      }
+    ]
+  },
+  apis: ["./routes/**/*.js"] 
+};
+
+module.exports = swaggerJsdoc(options);

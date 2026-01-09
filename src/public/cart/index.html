@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Your Cart</title>
+
+
+  <link rel="stylesheet" href="/css/cart.css">
+</head>
+<body>
+
+<h2>Your Cart</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Price</th>
+      <th>Qty</th>
+      <th>Subtotal</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody id="cartBody"></tbody>
+</table>
+
+<h3 id="total"></h3>
+
+<button onclick="goCheckout()">Checkout</button><br>
+
+<a href="/v1/products">Continue Shopping</a>
+
+
+<script type="module" src="/js/cart.js"></script>
+</body>
+</html>

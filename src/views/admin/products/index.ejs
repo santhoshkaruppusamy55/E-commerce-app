@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin - Products</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    h1 {
+      margin-bottom: 15px;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+    }
+
+    .left-actions a {
+      margin-right: 10px;
+      text-decoration: none;
+    }
+
+    form {
+      margin-bottom: 15px;
+    }
+
+    input,
+    select,
+    button {
+      padding: 6px;
+      margin-right: 5px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th,
+    td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: left;
+    }
+
+    img {
+      max-width: 80px;
+    }
+
+    .pagination {
+      margin-top: 15px;
+    }
+
+    .pagination a {
+      margin-right: 5px;
+      text-decoration: none;
+    }
+
+    .pagination .active {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Products</h1>
+
+  <div class="actions">
+    <div class="left-actions">
+      <a href="/admin/products/create">Create Product</a>
+      <a href="/admin/categories">Manage Categories</a>
+    </div>
+
+    <form action="/v1/auth/logout" method="POST">
+      <button type="submit">Logout</button>
+    </form>
+  </div>
+
+  <form method="GET" action="/admin/products">
+    <input
+      type="text"
+      name="search"
+      placeholder="Search product"
+      value="<%= search %>"
+    />
+
+    <select name="category">
+      <option value="">All Categories</option>
+      <% categories.forEach(cat => { %>
+        <option
+          value="<%= cat.id %>"
+          <%= selectedCategory == cat.id ? "selected" : "" %>
+        >
+          <%= cat.name %>
+        </option>
+      <% }) %>
+    </select>
+
+    <button type="submit">Search</button>
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>Title</th>
+        <th>Category</th>
+        <th>Price</th>
+        <th>Qty</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <% if (products.length === 0) { %>
+        <tr>
+          <td colspan="6">No products found</td>
+        </tr>
+      <% } %>
+
+      <% products.forEach(product => { %>
+        <tr>
+          <td>
+            <% if (product.ProductImages.length) { %>
+              <img src="<%= product.ProductImages[0].path %>" />
+            <% } else { %>
+              No Image
+            <% } %>
+          </td>
+
+          <td><%= product.title %></td>
+          <td><%= product.Category.name %></td>
+          <td>₹ <%= product.price %></td>
+          <td><%= product.qtyAvailable %></td>
+
+          <td>
+            <a href="/admin/products/<%= product.id %>/edit">Edit</a>
+            |
+            <form
+              action="/admin/products/<%= product.id %>/delete"
+              method="POST"
+              style="display:inline"
+            >
+              <button type="submit">Delete</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+
+    </tbody>
+  </table>
+
+  <div class="pagination">
+    <% for (let i = 1; i <= totalPages; i++) { %>
+      <a
+        href="/admin/products?page=<%= i %>&search=<%= search %>&category=<%= selectedCategory %>"
+        class="<%= i === currentPage ? 'active' : '' %>"
+      >
+        <%= i %>
+      </a>
+    <% } %>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Product</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+    }
+
+    h2 {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 6px;
+      margin-top: 4px;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 8px 12px;
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 15px;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Create Product</h2>
+
+    <form
+      action="/admin/products"
+      method="POST"
+      enctype="multipart/form-data"
+    >
+
+      <label>Product Title</label>
+      <input type="text" name="title" required />
+
+      <label>Description</label>
+      <textarea name="description"></textarea>
+
+      <label>Price</label>
+      <input type="number" name="price" step="0.01" required />
+
+      <label>Quantity Available</label>
+      <input type="number" name="qtyAvailable" required />
+
+      <label>Category</label>
+      <select name="categoryId" required>
+        <option value="">Select Category</option>
+        <% categories.forEach(cat => { %>
+          <option value="<%= cat.id %>"><%= cat.name %></option>
+        <% }) %>
+      </select>
+
+      <label>Product Image</label>
+      <input type="file" name="image" accept="image/*" required />
+
+      <button type="submit">Create Product</button>
+    </form>
+
+    <a href="/admin/products">← Back to products</a>
+  </div>
+
+</body>
+</html>

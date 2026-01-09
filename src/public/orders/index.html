@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>My Orders</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  
+  <link rel="stylesheet" href="/css/orders-index.css" />
+</head>
+<body>
+
+<div class="container">
+  <h2>My Orders</h2>
+
+  <div id="message" class="message"></div>
+
+  <table id="ordersTable">
+    <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>Total</th>
+        <th>Date</th>
+        <th>View</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <div class="pagination" id="pagination"></div>
+
+  <a href="/v1/products">← Continue shopping</a>
+</div>
+
+<script type="module" src="/js/orders-index.js"></script>
+</body>
+</html>

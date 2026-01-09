@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <h2>Order Confirmation</h2>
+
+  <p>Your order <strong>#<%= orderId %></strong> has been placed successfully.</p>
+
+  <h3>Order Items</h3>
+  <ul>
+    <% items.forEach(item => { %>
+      <li>
+        <%= item.title %> —
+        <%= item.qty %> × ₹<%= item.unitPrice %>
+      </li>
+    <% }) %>
+  </ul>
+
+  <h3>Total: ₹ <%= total %></h3>
+
+  <p>Thank you for shopping with us!</p>
+</body>
+</html>

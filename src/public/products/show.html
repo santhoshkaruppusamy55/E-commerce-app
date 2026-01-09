@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Product</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  
+  <link rel="stylesheet" href="/css/products-show.css">
+</head>
+<body>
+
+<div class="container">
+  <div>
+    <img id="image">
+  </div>
+
+  <div>
+    <h2 id="title"></h2>
+    <p id="price"></p>
+    <p id="category"></p>
+    <p id="stock"></p>
+    <p id="desc"></p>
+
+    <form id="cartForm">
+      <input type="number" id="qty" min="1" value="1">
+      <button type="submit">Add to Cart</button>
+    </form>
+
+    <a href="/v1/products">← Back</a>
+  </div>
+</div>
+
+
+<script type="module" src="/js/products-show.js"></script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register</title>
+  <link rel="stylesheet" href="/css/register.css">
+</head>
+<body>
+
+<div class="box">
+  <h2>Create Account</h2>
+
+  <div id="message" class="message"></div>
+
+  <form id="registerForm">
+    <label>Name</label>
+    <input type="text" name="name" required />
+
+    <label>Email</label>
+    <input type="email" name="email" required />
+
+    <label>Password</label>
+    <input type="password" name="password" required />
+
+    <button type="submit">Register</button>
+  </form>
+
+  <p>
+    Already have an account?
+    <a href="/v1/auth/login">Login</a>
+  </p>
+</div>
+
+<script type="module" src="/js/register.js"></script>
+</body>
+</html>
