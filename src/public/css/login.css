@@ -22,6 +22,7 @@ input {
   width: 100%;
   padding: 6px;
   margin-top: 4px;
+  padding-right: 40px;
 }
 
 button {
@@ -40,3 +41,23 @@ button {
   margin-bottom: 10px;
   color: red;
 }
+
+/* Password toggle styling */
+.form-group { position: relative; }
+.password-toggle {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+}
+.password-toggle svg { display: block; }

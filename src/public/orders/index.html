@@ -1,37 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>My Orders</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  
-  <link rel="stylesheet" href="/css/orders-index.css" />
+<head>
+  <meta charset="UTF-8">
+  <title>My Orders</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/variables.css?v=7">
+  <link rel="stylesheet" href="/css/global.css?v=7">
+  <link rel="stylesheet" href="/css/user.css?v=7">
 </head>
+
 <body>
 
-<div class="container">
-  <h2>My Orders</h2>
+  <header class="top-bar">
+    <a href="/v1/products" class="brand">Store</a>
+    <nav class="nav-links">
+      <a href="/v1/cart">Cart</a>
+      <a href="/v1/orders">My Orders</a>
+    </nav>
+  </header>
 
-  <div id="message" class="message"></div>
+  <div class="page-container">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+      <h1 class="page-title" style="margin: 0;">My Orders</h1>
+      <a href="/v1/products" class="btn btn-secondary">Start Shopping</a>
+    </div>
 
-  <table id="ordersTable">
-    <thead>
-      <tr>
-        <th>Order ID</th>
-        <th>Total</th>
-        <th>Date</th>
-        <th>View</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+    <div id="message" class="message" style="margin-bottom: 16px;"></div>
 
-  <div class="pagination" id="pagination"></div>
+    <div class="card" style="padding: 0; overflow: hidden;">
+      <div class="table-container" style="border: none; box-shadow: none;">
+        <table id="ordersTable">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Total</th>
+              <th>Date</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
 
-  <a href="/v1/products">← Continue shopping</a>
-</div>
+    <div class="pagination" id="pagination"></div>
+  </div>
 
-<script type="module" src="/js/orders-index.js"></script>
+  <script type="module" src="/js/orders-index.js"></script>
 </body>
+
 </html>

@@ -3,19 +3,23 @@ import { apiFetch } from "/js/api.js";
 const grid = document.getElementById("productGrid");
 const pagination = document.getElementById("pagination");
 const categorySelect = document.getElementById("categorySelect");
-const count=document.getElementById("count");
 
 async function loadProducts(query = "") {
   try {
-  
-    const data = await apiFetch("/v1/products/api" + query);
+    // normalize params: if query is empty use current window search
+    const paramString = query && query.length ? query.replace(/^\?/, "") : window.location.search.replace(/^\?/, "");
+    const params = new URLSearchParams(paramString);
+    const selectedCategory = params.get("category") || "";
 
+    const data = await apiFetch("/v1/products/api" + (paramString ? `?${paramString}` : ""));
 
-    categorySelect.innerHTML = `<option value="">All Categories</option>`;
+    // render category select and preserve the selected option
+    categorySelect.innerHTML = `<option value="" ${selectedCategory === "" ? "selected" : ""}>All Categories</option>`;
 
     data.categories.forEach(c => {
+      const isSelected = String(c.id) === String(selectedCategory) ? "selected" : "";
       categorySelect.innerHTML += `
-        <option value="${c.id}">
+        <option value="${c.id}" ${isSelected}>
           ${c.name}
         </option>
       `;
@@ -31,28 +35,30 @@ async function loadProducts(query = "") {
     }
 
     data.products.forEach(p => {
+      const productImage = p.ProductImages.length 
+        ? `<img src="${p.ProductImages[0].path}" class="product-image" alt="${p.title}" />` 
+        : `<div class="product-image" style="display: flex; align-items: center; justify-content: center; color: var(--text-muted);">No Image</div>`;
+
       grid.innerHTML += `
-        <div class="card">
-          ${
-            p.ProductImages.length
-              ? `<img src="${p.ProductImages[0].path}" />`
-              : ""
-          }
-
-          <h3>${p.title}</h3>
-          <p>₹ ${p.price}</p>
-          <p>${p.Category.name}</p>
-          <p>Available: ${p.qtyAvailable}</p>
-
-          ${
-            p.qtyAvailable === 0
-              ? `<p>Out of stock</p>`
-              : ""
-          }
-
+        <div class="product-card">
           <a href="/v1/products/${p.id}">
-            View
+            ${productImage}
           </a>
+          <div class="product-info">
+            <h3 class="product-title" style="margin-bottom: 4px; font-size: 1rem;">
+              <a href="/v1/products/${p.id}">${p.title}</a>
+            </h3>
+            <p class="text-muted" style="font-size: 0.875rem; margin-bottom: 8px;">${p.Category.name}</p>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
+              <span class="product-price">₹ ${p.price}</span>
+              ${
+                p.qtyAvailable > 0
+                  ? `<span style="font-size: 0.75rem; color: var(--success); background: #ecfdf5; padding: 2px 6px; border-radius: 4px;">In Stock</span>`
+                  : `<span style="font-size: 0.75rem; color: var(--danger); background: #fef2f2; padding: 2px 6px; border-radius: 4px;">Out of Stock</span>`
+              }
+            </div>
+          </div>
         </div>
       `;
     });
@@ -60,13 +66,17 @@ async function loadProducts(query = "") {
     
     pagination.innerHTML = "";
 
+    // render pagination while preserving current filters
     for (let i = 1; i <= data.totalPages; i++) {
+      const pageParams = new URLSearchParams(params.toString());
+      pageParams.set("page", i);
       pagination.innerHTML += `
-        <a onclick="loadProducts('?page=${i}')">
+        <a onclick="loadProducts('?${pageParams.toString()}')">
           ${i}
         </a>
       `;
     }
+
 
   } catch (err) {
     console.error("Load products failed:", err);
@@ -95,5 +105,15 @@ document.getElementById("logoutBtn").onclick = async () => {
     window.location.href = "/v1/auth/login";
   }
 };
+
+const countCart = document.getElementById("count");
+
+async function cartCount() {
+  const data = await apiFetch("/v1/cart/count");
+  console.log(data);
+  countCart.innerText = data.count;
+}
+cartCount();
+
 
 loadProducts();

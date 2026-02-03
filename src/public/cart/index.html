@@ -1,35 +1,81 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+  <meta charset="UTF-8">
   <title>Your Cart</title>
-
-
-  <link rel="stylesheet" href="/css/cart.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/variables.css?v=7">
+  <link rel="stylesheet" href="/css/global.css?v=7">
+  <link rel="stylesheet" href="/css/user.css?v=7">
 </head>
+
 <body>
 
-<h2>Your Cart</h2>
+  <header class="top-bar">
+    <a href="/v1/products" class="brand">Store</a>
+    <nav class="nav-links">
+      <a href="/v1/cart" style="display: flex; align-items: center; gap: 4px; color: var(--accent);">
+        Cart <span id="cartCount"
+          style="background: var(--accent); color: white; border-radius: 99px; padding: 0 6px; font-size: 10px; height: 16px; display: flex; align-items: center;">0</span>
+      </a>
+      <a href="/v1/orders">My Orders</a>
+    </nav>
+  </header>
 
-<table>
-  <thead>
-    <tr>
-      <th>Product</th>
-      <th>Price</th>
-      <th>Qty</th>
-      <th>Subtotal</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody id="cartBody"></tbody>
-</table>
+  <div class="page-container">
+    <h1 class="page-title">Shopping Cart</h1>
 
-<h3 id="total"></h3>
+    <div class="products-layout">
+      <!-- Cart Items -->
+      <div style="flex: 1;">
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Qty</th>
+                <th>Subtotal</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="cartBody"></tbody>
+          </table>
+        </div>
+        <div style="margin-top: 20px;">
+          <a href="/v1/products" class="btn btn-secondary">&larr; Continue Shopping</a>
+        </div>
+      </div>
 
-<button onclick="goCheckout()">Checkout</button><br>
+      <!-- Summary Sidebar -->
+      <div style="width: 300px; flex-shrink: 0;">
+        <div class="cart-summary">
+          <h3>Summary</h3>
+          <div
+            style="display: flex; justify-content: space-between; margin-top: 15px; font-size: 1.125rem; font-weight: 700;">
+            <span>Total</span>
+            <span id="total">₹ 0.00</span>
+          </div>
+          <button onclick="goCheckout()" class="btn btn-primary" style="width: 100%; margin-top: 20px;">Proceed to
+            Checkout</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<a href="/v1/products">Continue Shopping</a>
-
-
-<script type="module" src="/js/cart.js"></script>
+  <script type="module" src="/js/cart.js"></script>
+  <script type="module">
+    import { apiFetch } from "/js/api.js";
+    async function updateCartCount() {
+      try {
+        const data = await apiFetch("/v1/cart/count");
+        const el = document.getElementById("cartCount");
+        if (el) el.innerText = data.count;
+      } catch (e) { }
+    }
+    updateCartCount();
+  </script>
 </body>
+
 </html>

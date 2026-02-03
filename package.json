@@ -7,8 +7,9 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=development node server.js",
-    "test": "cross-env NODE_ENV=test jest --runInBand --coverage --verbose"
+    "start": "node server.js",
+    "test": "cross-env NODE_ENV=test jest --runInBand --coverage --verbose",
+    "seed":"cross-env NODE_ENV=production npx sequelize-cli db:seed:all"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",

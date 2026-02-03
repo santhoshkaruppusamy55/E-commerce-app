@@ -1,0 +1,95 @@
+:root {
+  /* Colors */
+  --primary: #0f172a;
+  /* Slate 900 - Dark charcoal for Primary Actions/Headings */
+  --primary-hover: #334155;
+  /* Slate 700 */
+  --secondary: #64748b;
+  /* Slate 500 */
+
+  --accent: #2563eb;
+  /* Blue 600 - Standard Trustworthy Blue */
+  --accent-hover: #1d4ed8;
+  /* Blue 700 */
+
+  /* Backgrounds */
+  --bg-body: #f1f5f9;
+  /* Slate 100 - Visible background */
+  --bg-surface: #ffffff;
+  /* Pure White for Cards */
+  --bg-sidebar: #0f172a;
+  /* Slate 900 */
+  --bg-input: #ffffff;
+
+  /* Navbar (Standard Ecommerce Navy/Blue) */
+  --bg-navbar: #1e293b;
+  /* Slate 800 or Blue 900 */
+  --text-navbar: #ffffff;
+
+  /* Auth Page Gradient - OCEAN TECH (Vibrant & Professional) */
+  /* A refined multi-tonal blend of Deep Navy, Royal Blue, and Teal-Cyan */
+  --bg-auth-gradient: radial-gradient(at 0% 0%, #0f172a 0px, transparent 50%),
+    radial-gradient(at 100% 0%, #1e4ed8 0px, transparent 50%),
+    radial-gradient(at 100% 100%, #06b6d4 0px, transparent 50%),
+    radial-gradient(at 0% 100%, #2563eb 0px, transparent 50%),
+    #1e293b;
+
+  /* Glassmorphism Tokens - Enhanced for colorful backgrounds */
+  --glass-bg: rgba(255, 255, 255, 0.94);
+  --glass-border: rgba(255, 255, 255, 0.6);
+  --glass-shadow: 0 32px 64px -12px rgba(0, 0, 0, 0.5);
+
+  /* Text */
+  --text-main: #111827;
+  /* Gray 900 - Sharp text */
+  --text-muted: #6b7280;
+  /* Gray 500 */
+  --text-subtle: #9ca3af;
+  /* Gray 400 */
+  --text-inverted: #ffffff;
+
+  /* Borders */
+  --border-light: #e5e7eb;
+  /* Gray 200 */
+  --border-medium: #d1d5db;
+  /* Gray 300 */
+  --border-focus: #3b82f6;
+  /* Blue 500 */
+
+  /* Status */
+  --success: #10b981;
+  --success-bg: #ecfdf5;
+  --danger: #ef4444;
+  --danger-bg: #fef2f2;
+  --warning: #f59e0b;
+
+  /* Typography */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+
+  /* Shadows - Layered for depth */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.06);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+
+  /* Border Radius */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}

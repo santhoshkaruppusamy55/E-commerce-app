@@ -33,7 +33,7 @@ const validateRequest = require("../../validators/validateRequest");
  *         description: Unauthorized
  */
 router.get("/data", authMiddleware, cartController.getCart);
-
+router.get("/count",authMiddleware,cartController.getCount);
 /**
  * @swagger
  * /v1/cart:

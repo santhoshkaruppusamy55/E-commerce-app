@@ -1,108 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Admin - Categories</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-    }
-
-    .container {
-      max-width: 600px;
-      margin: auto;
-    }
-
-    h2 {
-      margin-bottom: 15px;
-    }
-    
-    form {
-      margin-bottom: 15px;
-    }
-
-    input {
-      padding: 6px;
-      width: 70%;
-    }
-
-    button {
-      padding: 6px 10px;
-      margin-left: 5px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-    }
-
-    th, td {
-      border: 1px solid #ccc;
-      padding: 8px;
-      text-align: left;
-    }
-
-    a {
-      display: inline-block;
-      margin-top: 15px;
-      text-decoration: none;
-    }
-  </style>
+  <link rel="stylesheet" href="/css/variables.css?v=4">
+  <link rel="stylesheet" href="/css/global.css?v=4">
+  <link rel="stylesheet" href="/css/admin.css?v=4">
 </head>
+
 <body>
 
-  <div class="container">
-    <h2>Categories</h2>
+  <div class="admin-layout">
+    <aside class="admin-sidebar">
+      <div class="sidebar-header">
+        <h2 style="color: white; margin: 0; font-size: 1.25rem;">Admin Panel</h2>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="/admin/products" class="sidebar-link">
+          <span class="icon">📦</span> Products
+        </a>
+        <a href="/admin/categories" class="sidebar-link active">
+          <span class="icon">📁</span> Categories
+        </a>
+        <a href="/v1/products" class="sidebar-link"
+          style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
+          <span class="icon">🏠</span> Back to Store
+        </a>
+      </nav>
+    </aside>
 
-    <form action="/admin/categories" method="POST">
-      <input
-        type="text"
-        name="name"
-        placeholder="Category name"
-        required
-      />
-      <button type="submit">Add</button>
-    </form>
+    <main class="admin-main">
+      <header class="admin-header">
+        <div>
+          <h1 class="page-title">Category Management</h1>
+          <p class="text-muted">Organize your store catalog</p>
+        </div>
+      </header>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
+      <section class="card" style="margin-bottom: 24px;">
+        <h3 style="margin-bottom: 16px; font-size: 1rem;">Add New Category</h3>
+        <form action="/admin/categories" method="POST"
+          style="display: flex; gap: 12px; align-items: flex-end; max-width: 500px;">
+          <div class="form-group" style="flex: 1; margin-bottom: 0;">
+            <label>Category Name</label>
+            <input type="text" name="name" placeholder="e.g. Electronics" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Add Category</button>
+        </form>
+      </section>
 
-        <% if (categories.length === 0) { %>
-          <tr>
-            <td colspan="2">No categories found</td>
-          </tr>
-        <% } %>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Category Name</th>
+              <th style="width: 100px;">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (categories.length===0) { %>
+              <tr>
+                <td colspan="2" class="text-center" style="padding: 40px; color: var(--text-muted);">
+                  No categories found. Start by adding one above.
+                </td>
+              </tr>
+              <% } %>
 
-        <% categories.forEach(category => { %>
-          <tr>
-            <td><%= category.name %></td>
-            <td>
-              <form
-                action="/admin/categories/<%= category.id %>/delete"
-                method="POST"
-                style="display:inline"
-              >
-                <button type="submit">Delete</button>
-              </form>
-            </td>
-          </tr>
-        <% }) %>
-
-      </tbody>
-    </table>
-
-    <a href="/admin/products">← Back to Products</a>
+                <% categories.forEach(category=> { %>
+                  <tr>
+                    <td style="font-weight: 500;">
+                      <%= category.name %>
+                    </td>
+                    <td>
+                      <form action="/admin/categories/<%= category.id %>/delete" method="POST" style="display:inline"
+                        onsubmit="return confirm('Are you sure? All products in this category will be updated.')">
+                        <button type="submit" class="btn btn-danger"
+                          style="padding: 4px 8px; font-size: 12px;">Delete</button>
+                      </form>
+                    </td>
+                  </tr>
+                  <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </main>
   </div>
 
 </body>
+
 </html>

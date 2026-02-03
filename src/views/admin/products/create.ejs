@@ -1,89 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Create Product</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-    }
-
-    .container {
-      max-width: 600px;
-      margin: auto;
-    }
-
-    h2 {
-      margin-bottom: 15px;
-    }
-
-    label {
-      display: block;
-      margin-top: 10px;
-    }
-
-    input,
-    textarea,
-    select {
-      width: 100%;
-      padding: 6px;
-      margin-top: 4px;
-    }
-
-    button {
-      margin-top: 15px;
-      padding: 8px 12px;
-    }
-
-    a {
-      display: inline-block;
-      margin-top: 15px;
-      text-decoration: none;
-    }
-  </style>
+  <link rel="stylesheet" href="/css/variables.css?v=4">
+  <link rel="stylesheet" href="/css/global.css?v=4">
+  <link rel="stylesheet" href="/css/admin.css?v=4">
 </head>
+
 <body>
 
-  <div class="container">
-    <h2>Create Product</h2>
+  <div class="admin-layout">
+    <aside class="admin-sidebar">
+      <div class="sidebar-header">
+        Admin Panel
+      </div>
+      <nav class="sidebar-nav">
+        <a href="/admin/products" class="active">Products</a>
+        <a href="/admin/categories">Categories</a>
+        <a href="/v1/products" target="_blank">View Site &rarr;</a>
+      </nav>
+      <div class="sidebar-footer">
+        <form action="/v1/auth/logout" method="POST">
+          <button type="submit" class="btn btn-secondary"
+            style="width: 100%; border: none; background: rgba(255,255,255,0.1); color: white;">Logout</button>
+        </form>
+      </div>
+    </aside>
 
-    <form
-      action="/admin/products"
-      method="POST"
-      enctype="multipart/form-data"
-    >
+    <main class="admin-main">
+      <div class="page-header">
+        <h1 class="page-title">Create Product</h1>
+        <a href="/admin/products" class="btn btn-secondary">&larr; Back to products</a>
+      </div>
 
-      <label>Product Title</label>
-      <input type="text" name="title" required />
+      <div class="card" style="max-width: 800px;">
+        <form action="/admin/products" method="POST" enctype="multipart/form-data">
 
-      <label>Description</label>
-      <textarea name="description"></textarea>
+          <div class="form-group">
+            <label>Product Title</label>
+            <input type="text" name="title" required placeholder="e.g. iPhone 15 Pro" />
+          </div>
 
-      <label>Price</label>
-      <input type="number" name="price" step="0.01" required />
+          <div class="form-group">
+            <label>Description</label>
+            <textarea name="description" rows="4" placeholder="Product details..."></textarea>
+          </div>
 
-      <label>Quantity Available</label>
-      <input type="number" name="qtyAvailable" required />
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="form-group">
+              <label>Price</label>
+              <input type="number" name="price" step="0.01" required placeholder="0.00" />
+            </div>
 
-      <label>Category</label>
-      <select name="categoryId" required>
-        <option value="">Select Category</option>
-        <% categories.forEach(cat => { %>
-          <option value="<%= cat.id %>"><%= cat.name %></option>
-        <% }) %>
-      </select>
+            <div class="form-group">
+              <label>Quantity Available</label>
+              <input type="number" name="qtyAvailable" required placeholder="0" />
+            </div>
+          </div>
 
-      <label>Product Image</label>
-      <input type="file" name="image" accept="image/*" required />
+          <div class="form-group">
+            <label>Category</label>
+            <select name="categoryId" required>
+              <option value="">Select Category</option>
+              <% categories.forEach(cat=> { %>
+                <option value="<%= cat.id %>">
+                  <%= cat.name %>
+                </option>
+                <% }) %>
+            </select>
+          </div>
 
-      <button type="submit">Create Product</button>
-    </form>
+          <div class="form-group">
+            <label>Product Image</label>
+            <input type="file" name="image" accept="image/*" required
+              style="padding: 10px; border: 1px dashed var(--border-focus); background: var(--bg-body);" />
+          </div>
 
-    <a href="/admin/products">← Back to products</a>
+          <div style="margin-top: 30px;">
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Create Product</button>
+          </div>
+
+        </form>
+      </div>
+    </main>
   </div>
 
 </body>
+
 </html>

@@ -1,172 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <title>Admin - Products</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-    }
-
-    h1 {
-      margin-bottom: 15px;
-    }
-
-    .actions {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 15px;
-    }
-
-    .left-actions a {
-      margin-right: 10px;
-      text-decoration: none;
-    }
-
-    form {
-      margin-bottom: 15px;
-    }
-
-    input,
-    select,
-    button {
-      padding: 6px;
-      margin-right: 5px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-    }
-
-    th,
-    td {
-      border: 1px solid #ccc;
-      padding: 8px;
-      text-align: left;
-    }
-
-    img {
-      max-width: 80px;
-    }
-
-    .pagination {
-      margin-top: 15px;
-    }
-
-    .pagination a {
-      margin-right: 5px;
-      text-decoration: none;
-    }
-
-    .pagination .active {
-      font-weight: bold;
-    }
-  </style>
+  <link rel="stylesheet" href="/css/variables.css?v=4">
+  <link rel="stylesheet" href="/css/global.css?v=4">
+  <link rel="stylesheet" href="/css/admin.css?v=4">
 </head>
+
 <body>
 
-  <h1>Products</h1>
+  <div class="admin-layout">
+    <aside class="admin-sidebar">
+      <div class="sidebar-header">
+        Admin Panel
+      </div>
+      <nav class="sidebar-nav">
+        <a href="/admin/products" class="active">Products</a>
+        <a href="/admin/categories">Categories</a>
+        <a href="/v1/products" target="_blank">View Site &rarr;</a>
+      </nav>
+      <div class="sidebar-footer">
+        <form action="/v1/auth/logout" method="POST">
+          <button type="submit" class="btn btn-secondary"
+            style="width: 100%; border: none; background: rgba(255,255,255,0.1); color: white;">Logout</button>
+        </form>
+      </div>
+    </aside>
 
-  <div class="actions">
-    <div class="left-actions">
-      <a href="/admin/products/create">Create Product</a>
-      <a href="/admin/categories">Manage Categories</a>
-    </div>
+    <main class="admin-main">
+      <div class="page-header">
+        <h1 class="page-title">Products</h1>
+        <a href="/admin/products/create" class="btn btn-primary">Create Product</a>
+      </div>
 
-    <form action="/v1/auth/logout" method="POST">
-      <button type="submit">Logout</button>
-    </form>
-  </div>
+      <div class="card mb-4">
+        <form method="GET" action="/admin/products" style="display: flex; gap: 10px; margin-bottom: 0;">
+          <div style="flex: 1;">
+            <input type="text" name="search" placeholder="Search products..." value="<%= search %>">
+          </div>
+          <div style="width: 200px;">
+            <select name="category">
+              <option value="">All Categories</option>
+              <% categories.forEach(cat=> { %>
+                <option value="<%= cat.id %>" <%=selectedCategory==cat.id ? "selected" : "" %> >
+                  <%= cat.name %>
+                </option>
+                <% }) %>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-secondary">Filter</button>
+        </form>
+      </div>
 
-  <form method="GET" action="/admin/products">
-    <input
-      type="text"
-      name="search"
-      placeholder="Search product"
-      value="<%= search %>"
-    />
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th width="80">Image</th>
+              <th>Title</th>
+              <th>Category</th>
+              <th>Price</th>
+              <th>Qty</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (products.length===0) { %>
+              <tr>
+                <td colspan="6" class="text-center text-muted">No products found.</td>
+              </tr>
+              <% } %>
 
-    <select name="category">
-      <option value="">All Categories</option>
-      <% categories.forEach(cat => { %>
-        <option
-          value="<%= cat.id %>"
-          <%= selectedCategory == cat.id ? "selected" : "" %>
-        >
-          <%= cat.name %>
-        </option>
-      <% }) %>
-    </select>
+                <% products.forEach(product=> { %>
+                  <tr>
+                    <td>
+                      <% if (product.ProductImages.length) { %>
+                        <img src="<%= product.ProductImages[0].path %>"
+                          style="width: 48px; height: 48px; object-fit: cover; border-radius: 4px;" />
+                        <% } else { %>
+                          <div
+                            style="width: 48px; height: 48px; background: #f1f5f9; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 10px;">
+                            No Img</div>
+                          <% } %>
+                    </td>
+                    <td style="font-weight: 500;">
+                      <%= product.title %>
+                    </td>
+                    <td><span
+                        style="background: #e2e8f0; padding: 2px 8px; border-radius: 99px; font-size: 12px; color: #475569;">
+                        <%= product.Category.name %>
+                      </span></td>
+                    <td style="font-family: monospace;">₹<%= product.price %>
+                    </td>
+                    <td>
+                      <span style="color: <%= product.qtyAvailable < 5 ? 'var(--danger)' : 'inherit' %>">
+                        <%= product.qtyAvailable %>
+                      </span>
+                    </td>
+                    <td>
+                      <div style="display: flex; gap: 8px;">
+                        <a href="/admin/products/<%= product.id %>/edit" class="btn btn-secondary"
+                          style="padding: 4px 8px; font-size: 12px;">Edit</a>
+                        <form action="/admin/products/<%= product.id %>/delete" method="POST"
+                          onsubmit="return confirm('Are you sure?')">
+                          <button type="submit" class="btn btn-danger"
+                            style="padding: 4px 8px; font-size: 12px;">Delete</button>
+                        </form>
+                      </div>
+                    </td>
+                  </tr>
+                  <% }) %>
+          </tbody>
+        </table>
+      </div>
 
-    <button type="submit">Search</button>
-  </form>
+      <div class="pagination">
+        <% for (let i=1; i <=totalPages; i++) { %>
+          <a href="/admin/products?page=<%= i %>&search=<%= search %>&category=<%= selectedCategory %>"
+            class="<%= i === currentPage ? 'active' : '' %>">
+            <%= i %>
+          </a>
+          <% } %>
+      </div>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Image</th>
-        <th>Title</th>
-        <th>Category</th>
-        <th>Price</th>
-        <th>Qty</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-
-      <% if (products.length === 0) { %>
-        <tr>
-          <td colspan="6">No products found</td>
-        </tr>
-      <% } %>
-
-      <% products.forEach(product => { %>
-        <tr>
-          <td>
-            <% if (product.ProductImages.length) { %>
-              <img src="<%= product.ProductImages[0].path %>" />
-            <% } else { %>
-              No Image
-            <% } %>
-          </td>
-
-          <td><%= product.title %></td>
-          <td><%= product.Category.name %></td>
-          <td>₹ <%= product.price %></td>
-          <td><%= product.qtyAvailable %></td>
-
-          <td>
-            <a href="/admin/products/<%= product.id %>/edit">Edit</a>
-            |
-            <form
-              action="/admin/products/<%= product.id %>/delete"
-              method="POST"
-              style="display:inline"
-            >
-              <button type="submit">Delete</button>
-            </form>
-          </td>
-        </tr>
-      <% }) %>
-
-    </tbody>
-  </table>
-
-  <div class="pagination">
-    <% for (let i = 1; i <= totalPages; i++) { %>
-      <a
-        href="/admin/products?page=<%= i %>&search=<%= search %>&category=<%= selectedCategory %>"
-        class="<%= i === currentPage ? 'active' : '' %>"
-      >
-        <%= i %>
-      </a>
-    <% } %>
+    </main>
   </div>
 
 </body>
+
 </html>

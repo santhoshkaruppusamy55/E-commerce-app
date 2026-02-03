@@ -1,48 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Products</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <link rel="stylesheet" href="/css/products-index.css">
+  <link rel="stylesheet" href="/css/variables.css?v=7">
+  <link rel="stylesheet" href="/css/global.css?v=7">
+  <link rel="stylesheet" href="/css/user.css?v=7">
 </head>
+
 <body>
 
-<div class="top-bar">
-  <h1>Products</h1>
-  <div class="top-actions">
-    <a href="/v1/cart">Cart</a>
-    <a href="/v1/orders">My Orders</a>
-    <button id="logoutBtn">Logout</button>
+  <header class="top-bar">
+    <a href="/v1/products" class="brand">Store</a>
+    <nav class="nav-links">
+      <a href="/v1/cart" style="display: flex; align-items: center; gap: 4px;">
+        Cart <span id="count"
+          style="background: var(--accent); color: white; border-radius: 99px; padding: 0 6px; font-size: 10px; height: 16px; display: flex; align-items: center;">0</span>
+      </a>
+      <a href="/v1/orders">My Orders</a>
+      <button id="logoutBtn" class="btn btn-secondary" style="padding: 4px 12px; font-size: 12px;">Logout</button>
+    </nav>
+  </header>
+
+  <div class="page-container">
+    <div class="products-layout">
+      <!-- Sidebar Filters -->
+      <aside class="filter-sidebar">
+        <div class="card">
+          <h3 style="font-size: 1rem; margin-bottom: 16px;">Filters</h3>
+          <form id="filterForm">
+            <div class="form-group">
+              <label>Search</label>
+              <input type="text" name="q" placeholder="Keyword...">
+            </div>
+
+            <div class="form-group">
+              <label>Category</label>
+              <select name="category" id="categorySelect"></select>
+            </div>
+
+            <div class="form-group">
+              <label>Price Range</label>
+              <div style="display: flex; gap: 8px;">
+                <input type="number" name="priceMin" placeholder="Min" style="width: 100%;">
+                <input type="number" name="priceMax" placeholder="Max" style="width: 100%;">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Sort By</label>
+              <select name="sort">
+                <option value="">Newest</option>
+                <option value="price_asc">Price: Low to High</option>
+                <option value="price_desc">Price: High to Low</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label style="display: flex; align-items: center; gap: 8px; font-weight: 400; cursor: pointer;">
+                <input type="checkbox" name="inStock" value="true" style="width: auto; margin: 0;">
+                In Stock Only
+              </label>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Apply</button>
+          </form>
+        </div>
+      </aside>
+
+      <!-- Main Product Grid -->
+      <main class="product-grid-container">
+        <div class="grid product-grid" id="productGrid"></div>
+        <div class="pagination" id="pagination"></div>
+      </main>
+    </div>
   </div>
-</div>
 
-<form id="filterForm">
-  <input type="text" name="q" placeholder="Search">
-
-  <select name="category" id="categorySelect"></select>
-
-  <input type="number" name="priceMin" placeholder="Min">
-  <input type="number" name="priceMax" placeholder="Max">
-
-  <select name="sort">
-    <option value="">Price</option>
-    <option value="price_asc">Low → High</option>
-    <option value="price_desc">High → Low</option>
-  </select>
-
-  <label>
-    <input type="checkbox" name="inStock" value="true"> In stock
-  </label>
-
-  <button type="submit">Apply</button>
-</form>
-
-<div class="grid" id="productGrid"></div>
-<div class="pagination" id="pagination"></div>
-
-
-<script type="module" src="/js/products-index.js"></script>
+  <script type="module" src="/js/products-index.js"></script>
 </body>
+
 </html>

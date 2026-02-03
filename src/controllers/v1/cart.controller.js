@@ -9,6 +9,28 @@ exports.getCart = async (req, res) => {
   res.json({ cart });
 };
 
+
+exports.getCount = async (req, res) => {
+  try {
+    const cart = await Cart.findOne({
+      where: { userId: req.user.id },
+      include: [{ model: CartItem }]
+    });
+
+    if (!cart || !Array.isArray(cart.CartItems) || cart.CartItems.length === 0) {
+      return res.json({ count: 0 });
+    }
+
+    const count = cart.CartItems.reduce((sum, item) => sum + (item.qty || 0), 0);
+
+    return res.json({ count });
+  } catch (err) {
+    console.error("Get cart count error:", err);
+    return res.status(500).json({ message: "Failed to get cart count" });
+  }
+};
+
+
 exports.addItem = async (req, res) => {
   try {
     const userId = req.user.id;

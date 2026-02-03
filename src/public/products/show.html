@@ -1,37 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <title>Product</title>
+  <title>Product Details</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/variables.css?v=7">
+  <link rel="stylesheet" href="/css/global.css?v=7">
+  <link rel="stylesheet" href="/css/user.css?v=7">
+  <style>
+    .product-detail-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin-top: 40px;
+      background: var(--bg-surface);
+      padding: var(--spacing-xl);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-light);
+    }
 
-  
-  <link rel="stylesheet" href="/css/products-show.css">
+    .product-image-large {
+      width: 100%;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-light);
+    }
+
+    @media (max-width: 768px) {
+      .product-detail-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="container">
-  <div>
-    <img id="image">
+  <header class="top-bar">
+    <a href="/v1/products" class="brand">Store</a>
+    <nav class="nav-links">
+      <a href="/v1/cart" style="display: flex; align-items: center; gap: 4px;">
+        Cart <span id="cartCount"
+          style="background: var(--accent); color: white; border-radius: 99px; padding: 0 6px; font-size: 10px; height: 16px; display: flex; align-items: center;">0</span>
+      </a>
+      <a href="/v1/orders">My Orders</a>
+    </nav>
+  </header>
+
+  <div class="page-container">
+    <a href="/v1/products" class="btn btn-secondary" style="margin-bottom: 20px;">&larr; Back to Products</a>
+
+    <div class="product-detail-container">
+      <div>
+        <img id="image" class="product-image-large" alt="Product Image">
+      </div>
+
+      <div>
+        <span id="category"
+          style="background: #e2e8f0; padding: 4px 8px; border-radius: 99px; font-size: 0.75rem; color: #475569; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Category</span>
+
+        <h1 id="title" style="margin-top: 16px; margin-bottom: 8px;">Product Title</h1>
+        <p id="price" style="font-size: 1.5rem; font-weight: 700; color: var(--accent); margin-bottom: 16px;">₹ 0.00</p>
+
+        <p id="stock" style="margin-bottom: 24px; font-size: 0.875rem;"></p>
+
+        <p id="desc" style="color: var(--text-muted); line-height: 1.6; margin-bottom: 32px;"></p>
+
+        <form id="cartForm" style="display: flex; gap: 10px; align-items: center;">
+          <input type="number" id="qty" min="1" value="1" style="width: 80px;" aria-label="Quantity">
+          <button type="submit" class="btn btn-primary" style="padding: 10px 24px;">Add to Cart</button>
+        </form>
+      </div>
+    </div>
   </div>
 
-  <div>
-    <h2 id="title"></h2>
-    <p id="price"></p>
-    <p id="category"></p>
-    <p id="stock"></p>
-    <p id="desc"></p>
-
-    <form id="cartForm">
-      <input type="number" id="qty" min="1" value="1">
-      <button type="submit">Add to Cart</button>
-    </form>
-
-    <a href="/v1/products">← Back</a>
-  </div>
-</div>
-
-
-<script type="module" src="/js/products-show.js"></script>
+  <script type="module" src="/js/products-show.js"></script>
+  <script type="module">
+    import { apiFetch } from "/js/api.js";
+    async function updateCartCount() {
+      try {
+        const data = await apiFetch("/v1/cart/count");
+        const el = document.getElementById("cartCount");
+        if (el) el.innerText = data.count;
+      } catch (e) { }
+    }
+    updateCartCount();
+  </script>
 </body>
+
 </html>

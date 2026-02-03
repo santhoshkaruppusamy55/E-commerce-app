@@ -1,45 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Order Details</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <link rel="stylesheet" href="/css/order-show.css" />
+<head>
+  <meta charset="UTF-8">
+  <title>Order Details</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/variables.css?v=7">
+  <link rel="stylesheet" href="/css/global.css?v=7">
+  <link rel="stylesheet" href="/css/user.css?v=7">
 </head>
+
 <body>
 
-<div class="container">
-  <h2 id="orderTitle">Order</h2>
+  <header class="top-bar">
+    <a href="/v1/products" class="brand">Store</a>
+    <nav class="nav-links">
+      <a href="/v1/cart">Cart</a>
+      <a href="/v1/orders">My Orders</a>
+    </nav>
+  </header>
 
-  <div class="meta" id="orderMeta"></div>
+  <div class="page-container">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px;">
+      <a href="/v1/orders" class="btn btn-secondary">&larr; Back to Orders</a>
+      <h1 id="orderTitle" style="margin: 0; font-size: 1.5rem;">Order</h1>
+    </div>
 
-  <h3>Shipping Details</h3>
-  <div id="shipping"></div>
+    <div class="products-layout">
+      <!-- Main Content: Items -->
+      <div style="flex: 1;">
+        <div class="card">
+          <h3 style="margin-bottom: 16px;">Items</h3>
+          <div class="table-container" style="border: none; box-shadow: none;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th class="right">Qty</th>
+                  <th class="right">Unit Price</th>
+                  <th class="right">Subtotal</th>
+                </tr>
+              </thead>
+              <tbody id="itemsBody"></tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="3" class="right total" style="text-align: right; font-weight: 700; padding-top: 20px;">
+                    Total</td>
+                  <td class="right total" id="orderTotal"
+                    style="font-weight: 700; padding-top: 20px; color: var(--accent); font-size: 1.125rem;"></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
 
-  <h3>Items</h3>
+      <!-- Sidebar: Meta & Shipping -->
+      <aside style="width: 320px; flex-shrink: 0;">
+        <div class="card" style="margin-bottom: 20px;">
+          <h3 style="margin-bottom: 12px; font-size: 1rem;">Order Info</h3>
+          <div id="orderMeta" style="color: var(--text-muted); font-size: 0.875rem; line-height: 1.6;"></div>
+        </div>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Product</th>
-        <th class="right">Qty</th>
-        <th class="right">Unit Price</th>
-        <th class="right">Subtotal</th>
-      </tr>
-    </thead>
-    <tbody id="itemsBody"></tbody>
-    <tfoot>
-      <tr>
-        <td colspan="3" class="right total">Total</td>
-        <td class="right total" id="orderTotal"></td>
-      </tr>
-    </tfoot>
-  </table>
+        <div class="card">
+          <h3 style="margin-bottom: 12px; font-size: 1rem;">Shipping Details</h3>
+          <div id="shipping" style="color: var(--text-muted); font-size: 0.875rem; line-height: 1.6;"></div>
+        </div>
+      </aside>
+    </div>
+  </div>
 
-  <a href="/v1/orders">← Back to my orders</a>
-</div>
-
-<script type="module" src="/js/order-show.js"></script>
+  <script type="module" src="/js/order-show.js"></script>
 </body>
+
 </html>

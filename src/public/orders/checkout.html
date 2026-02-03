@@ -1,34 +1,79 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+  <meta charset="UTF-8">
   <title>Checkout</title>
-  <link rel="stylesheet" href="/css/checkout.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/variables.css?v=7">
+  <link rel="stylesheet" href="/css/global.css?v=7">
+  <link rel="stylesheet" href="/css/user.css?v=7">
 </head>
+
 <body>
 
-<h2>Checkout</h2>
+  <header class="top-bar">
+    <a href="/v1/products" class="brand">Store</a>
+    <nav class="nav-links">
+      <a href="/v1/cart">Cart</a>
+      <a href="/v1/orders">My Orders</a>
+    </nav>
+  </header>
 
-<ul id="summary"></ul>
-<h3 id="total"></h3>
+  <div class="page-container">
+    <a href="/v1/cart" class="btn btn-secondary" style="margin-bottom: 20px;">&larr; Back to Cart</a>
 
-<hr>
+    <div class="products-layout">
+      <!-- Checkout Form -->
+      <div style="flex: 1;">
+        <div class="card">
+          <h2 style="margin-bottom: 20px; font-size: 1.25rem;">Shipping Details</h2>
+          <form id="orderForm">
+            <div class="form-group">
+              <label>Full Name</label>
+              <input type="text" name="shippingName" placeholder="Your Name" required>
+            </div>
 
-<form id="orderForm">
-  <input name="shippingName" placeholder="Name" required>
-  <input name="shippingEmail" placeholder="Email" required>
-  <input name="shippingPhone" placeholder="Phone" required>
-  <textarea
-    name="shippingAddress"
-    placeholder="Address"
-    required
-  ></textarea>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+              <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" name="shippingEmail" placeholder="you@example.com" required>
+              </div>
+              <div class="form-group">
+                <label>Phone Number</label>
+                <input type="text" name="shippingPhone" placeholder="Mobile Number" required>
+              </div>
+            </div>
 
-  <button type="submit">Place Order</button>
-</form>
+            <div class="form-group">
+              <label>Shipping Address</label>
+              <textarea name="shippingAddress" rows="4" placeholder="Full Address..." required></textarea>
+            </div>
 
-<a href="/v1/cart">← Back to cart</a>
+            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px; margin-top: 10px;">Place
+              Order</button>
+          </form>
+        </div>
+      </div>
 
+      <!-- Order Summary -->
+      <aside style="width: 320px; flex-shrink: 0;">
+        <div class="cart-summary">
+          <h3>Order Summary</h3>
+          <ul id="summary"
+            style="list-style: none; margin: 20px 0; border-top: 1px solid var(--border-light); padding-top: 10px;">
+          </ul>
+          <div
+            style="display: flex; justify-content: space-between; font-weight: 700; font-size: 1.125rem; border-top: 1px dashed var(--border-light); padding-top: 15px;">
+            <span>Total</span>
+            <span id="total">₹ 0.00</span>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
 
-<script type="module" src="/js/checkout.js"></script>
+  <script type="module" src="/js/checkout.js"></script>
 </body>
+
 </html>

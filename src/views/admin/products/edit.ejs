@@ -1,118 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Edit Product</title>
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-    }
-
-    .container {
-      max-width: 600px;
-      margin: auto;
-    }
-
-    h2 {
-      margin-bottom: 15px;
-    }
-
-    label {
-      display: block;
-      margin-top: 10px;
-    }
-
-    input,
-    textarea,
-    select {
-      width: 100%;
-      padding: 6px;
-      margin-top: 4px;
-    }
-
-    img {
-      margin-top: 10px;
-      max-width: 120px;
-    }
-
-    button {
-      margin-top: 15px;
-      padding: 8px 12px;
-    }
-
-    a {
-      display: inline-block;
-      margin-top: 15px;
-      text-decoration: none;
-    }
-  </style>
+  <link rel="stylesheet" href="/css/variables.css?v=4">
+  <link rel="stylesheet" href="/css/global.css?v=4">
+  <link rel="stylesheet" href="/css/admin.css?v=4">
 </head>
+
 <body>
 
-  <div class="container">
-    <h2>Edit Product</h2>
+  <div class="admin-layout">
+    <aside class="admin-sidebar">
+      <div class="sidebar-header">
+        Admin Panel
+      </div>
+      <nav class="sidebar-nav">
+        <a href="/admin/products" class="active">Products</a>
+        <a href="/admin/categories">Categories</a>
+        <a href="/v1/products" target="_blank">View Site &rarr;</a>
+      </nav>
+      <div class="sidebar-footer">
+        <form action="/v1/auth/logout" method="POST">
+          <button type="submit" class="btn btn-secondary"
+            style="width: 100%; border: none; background: rgba(255,255,255,0.1); color: white;">Logout</button>
+        </form>
+      </div>
+    </aside>
 
-    <form
-      action="/admin/products/<%= product.id %>/update"
-      method="POST"
-      enctype="multipart/form-data"
-    >
+    <main class="admin-main">
+      <div class="page-header">
+        <h1 class="page-title">Edit Product</h1>
+        <a href="/admin/products" class="btn btn-secondary">&larr; Back to products</a>
+      </div>
 
-      <label>Product Title</label>
-      <input
-        type="text"
-        name="title"
-        value="<%= product.title %>"
-        required
-      />
+      <div class="card" style="max-width: 800px;">
+        <form action="/admin/products/<%= product.id %>/update" method="POST" enctype="multipart/form-data">
 
-      <label>Description</label>
-      <textarea name="description" rows="4"><%= product.description %></textarea>
+          <div class="form-group">
+            <label>Product Title</label>
+            <input type="text" name="title" value="<%= product.title %>" required />
+          </div>
 
-      <label>Price</label>
-      <input
-        type="number"
-        name="price"
-        step="0.01"
-        value="<%= product.price %>"
-        required
-      />
+          <div class="form-group">
+            <label>Description</label>
+            <textarea name="description" rows="4"><%= product.description %></textarea>
+          </div>
 
-      <label>Quantity Available</label>
-      <input
-        type="number"
-        name="qtyAvailable"
-        value="<%= product.qtyAvailable %>"
-        required
-      />
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="form-group">
+              <label>Price</label>
+              <input type="number" name="price" step="0.01" value="<%= product.price %>" required />
+            </div>
 
-      <label>Category</label>
-      <select name="categoryId" required>
-        <% categories.forEach(cat => { %>
-          <option
-            value="<%= cat.id %>"
-            <%= cat.id === product.categoryId ? "selected" : "" %>
-          >
-            <%= cat.name %>
-          </option>
-        <% }) %>
-      </select>
+            <div class="form-group">
+              <label>Quantity Available</label>
+              <input type="number" name="qtyAvailable" value="<%= product.qtyAvailable %>" required />
+            </div>
+          </div>
 
-      <label>Current Image</label>
-      <% if (product.ProductImages.length) { %>
-        <img src="<%= product.ProductImages[0].path %>" />
-      <% } %>
+          <div class="form-group">
+            <label>Category</label>
+            <select name="categoryId" required>
+              <% categories.forEach(cat=> { %>
+                <option value="<%= cat.id %>" <%=cat.id===product.categoryId ? "selected" : "" %> >
+                  <%= cat.name %>
+                </option>
+                <% }) %>
+            </select>
+          </div>
 
-      <label>Replace Image (if need)</label>
-      <input type="file" name="image" accept="image/*" />
+          <div class="form-group">
+            <label>Current Image</label>
+            <% if (product.ProductImages.length) { %>
+              <div style="margin-top: 5px; margin-bottom: 10px;">
+                <img src="<%= product.ProductImages[0].path %>"
+                  style="max-width: 200px; border-radius: 4px; border: 1px solid var(--border-light);" />
+              </div>
+              <% } else { %>
+                <p class="text-muted">No image uploaded.</p>
+                <% } %>
 
-      <button type="submit">Update Product</button>
-    </form>
+                  <label style="margin-top: 15px;">Replace Image (optional)</label>
+                  <input type="file" name="image" accept="image/*"
+                    style="padding: 10px; border: 1px dashed var(--border-focus); background: var(--bg-body);" />
+          </div>
 
-    <a href="/admin/products">← Back to Products</a>
+          <div style="margin-top: 30px;">
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Update Product</button>
+          </div>
+
+        </form>
+      </div>
+    </main>
   </div>
 
 </body>
+
 </html>
